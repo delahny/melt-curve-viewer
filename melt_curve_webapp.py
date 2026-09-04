@@ -219,14 +219,14 @@ app.layout = html.Div(
         html.P(
             "Upload your raw melt curve export below (required: Temperature "
             "column + one column per well). Optionally also upload a Peak "
-            "Results / Cq Results export to label wells with sample names "
+            "Results / Cq Results export with sample names filled out to label wells "
             "instead of just well IDs.",
             style={"fontFamily": "sans-serif", "color": "#555"},
         ),
         html.Div(
             [
                 html.Label(
-                    "1. Melt curve RFU export (required)",
+                    "1. Melt curve RFU (required)",
                     style={"fontFamily": "sans-serif", "fontWeight": "bold"},
                 ),
                 dcc.Upload(
@@ -238,7 +238,7 @@ app.layout = html.Div(
                 html.Div(id="rfu-upload-status", style={"fontFamily": "sans-serif", "marginBottom": "16px"}),
 
                 html.Label(
-                    "2. Sample name lookup (optional)",
+                    "2. Sample name lookup (optional) [e.g. Melt_Curve_Peak_Results with sample names]",
                     style={"fontFamily": "sans-serif", "fontWeight": "bold"},
                 ),
                 dcc.Upload(
