@@ -326,7 +326,7 @@ def handle_rfu_upload(contents, filename):
         temperature, curves = parse_rfu_upload(contents)
         return (
             {"temperature": temperature, "curves": curves},
-            f"Loaded '{filename}': {len(curves)} wells.",
+                        html.Span(f"Loaded '{filename}': {len(curves)} wells.", style={"color": "green"}),
         )
     except Exception as e:
         return dash.no_update, f"Error reading '{filename}': {e}"
@@ -344,7 +344,7 @@ def handle_samplemap_upload(contents, filename):
         return dash.no_update, ""
     try:
         mapping = parse_sample_map_upload(contents)
-        return mapping, f"Loaded '{filename}': {len(mapping)} sample names."
+        return mapping, html.Span(f"Loaded '{filename}': {len(mapping)} sample names.", style={"color": "green"})
     except Exception as e:
         return dash.no_update, f"Error reading '{filename}': {e}"
 
@@ -404,6 +404,7 @@ def select_or_unselect_all(select_clicks, unselect_clicks, search_text, virtual_
     Input("well-table", "selected_rows"),
     Input("well-table", "derived_virtual_data"),
     Input("curve-store", "data"),
+    Input("samplemap-store", "data"),
     Input("derivative-checkbox", "value"),
 )
 def update_graph(selected_rows, virtual_data, curve_data, sample_map, derivative_option):
