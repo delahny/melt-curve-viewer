@@ -226,7 +226,7 @@ app.layout = html.Div(
         html.Div(
             [
                 html.Label(
-                    "1. Melt curve RFU (required)",
+                    "1. Melt curve RFU (required) [e.g. Melt_Curve_RFU_Results.xlsx]",
                     style={"fontFamily": "sans-serif", "fontWeight": "bold"},
                 ),
                 dcc.Upload(
@@ -238,7 +238,7 @@ app.layout = html.Div(
                 html.Div(id="rfu-upload-status", style={"fontFamily": "sans-serif", "marginBottom": "16px"}),
 
                 html.Label(
-                    "2. Sample name lookup (optional) [e.g. Melt_Curve_Peak_Results with sample names]",
+                    "2. Sample name file (optional) [e.g. Melt_Curve_Peak_Results.xlsx with Sample column filled out with sample names]",
                     style={"fontFamily": "sans-serif", "fontWeight": "bold"},
                 ),
                 dcc.Upload(
