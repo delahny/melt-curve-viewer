@@ -293,8 +293,9 @@ app.layout = html.Div(
             sort_action="native",
             row_selectable="multi",
             selected_rows=[],
-            page_size=20,
+            page_action="none",
             style_table={"maxHeight": "500px", "overflowY": "auto"},
+            fixed_rows={"headers": True},
             style_cell={"fontFamily": "sans-serif", "fontSize": "13px", "padding": "6px"},
             style_header={"fontWeight": "bold"},
         ),
@@ -405,12 +406,13 @@ def select_or_unselect_all(select_clicks, unselect_clicks, search_text, virtual_
     Input("curve-store", "data"),
     Input("derivative-checkbox", "value"),
 )
-def update_graph(selected_rows, virtual_data, curve_data, derivative_option):
+def update_graph(selected_rows, virtual_data, curve_data, sample_map, derivative_option):
     if not curve_data:
         return go.Figure()
 
     temperature = np.array(curve_data["temperature"])
     curves = curve_data["curves"]
+    sample_map = sample_map or {}
     compute_deriv = "derivative" in (derivative_option or [])
 
     if selected_rows and virtual_data:
@@ -425,11 +427,16 @@ def update_graph(selected_rows, virtual_data, curve_data, derivative_option):
         if compute_deriv:
             y = -np.gradient(y, temperature)
         color = palette[i % len(palette)]
+        sample_name = sample_map.get(well, "")
+        label = f"{well}: {sample_name}" if sample_name else well
         fig.add_trace(
             go.Scatter(
-                x=temperature, y=y, mode="lines", name=well,
+                x=temperature, y=y, mode="lines", name=label,
                 line=dict(color=color, width=1.5), opacity=0.85,
-                hovertemplate=f"Well: {well}<br>Temp: %{{x:.1f}} C<br>Value: %{{y:.1f}}<extra></extra>",
+                hovertemplate=(
+                    f"Well: {well}<br>Sample: {sample_name or '(none)'}<br>"
+                    "Temp: %{x:.1f} C<br>Value: %{y:.1f}<extra></extra>"
+                ),
             )
         )
 
