@@ -326,7 +326,7 @@ def handle_rfu_upload(contents, filename):
         temperature, curves = parse_rfu_upload(contents)
         return (
             {"temperature": temperature, "curves": curves},
-                        html.Span(f"Loaded '{filename}': {len(curves)} wells.", style={"color": "green"}),
+            html.Span(f"Loaded '{filename}': {len(curves)} wells.", style={"color": "green"}),
         )
     except Exception as e:
         return dash.no_update, f"Error reading '{filename}': {e}"
@@ -401,7 +401,7 @@ def select_or_unselect_all(select_clicks, unselect_clicks, search_text, virtual_
 
 @app.callback(
     Output("melt-graph", "figure"),
-    Input("well-table", "selected_rows"),
+    Input("well-table", "derived_virtual_selected_rows"),
     Input("well-table", "derived_virtual_data"),
     Input("curve-store", "data"),
     Input("samplemap-store", "data"),
